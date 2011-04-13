@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+  <title>Todos App</title>
+  <script src="dombuilder.js"></script>
+</head>
+<body><script>
+    var self = document.querySelector('body script');
+    self.parentNode.removeChild(self);
+    var root = domBuilder(
+      [".profile",
+        [".left.column",
+          ["#date", new Date().toString() ],
+          ["#address", "Sunnyvale, California" ]
+        ],
+        [".right.column", {onclick:function () {alert("Foo");}},
+          ["#email", "tim@creationix.com" ],
+          ["#bio", "Cool Guy" ]
+        ]
+      ],
+      ["hr", {style: {width:"100px",height:"50px"},$: function (hr) { console.log(hr); }}]
+    );
+    document.body.appendChild(root);
+</script></body>
+</html>
+
