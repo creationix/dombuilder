@@ -7,10 +7,7 @@
 //////////////////////////////////////
 
 (function () {
-  this.domBuilder = function domBuilder(json) {
-
-    // Support multiple arguments for flexible API
-    if (arguments.length > 1) return domBuilder(arguments);
+  this.domBuilder = function domBuilder(json, refs) {
 
     // Render strings as text nodes
     if (typeof json === 'string') return document.createTextNode(json);
@@ -30,6 +27,8 @@
           if (classes) node.setAttribute('class', classes.map(stripFirst).join(' '));
           var id = part.match(ID_MATCH);
           if (id) node.setAttribute('id', id[0].substr(1));
+          var ref = part.match(REF_MATCH);
+          if (refs && ref) refs[ref[0].substr(1)] = node;
           continue;
         } else {
           node = document.createDocumentFragment();
@@ -40,10 +39,9 @@
       if (first && typeof part === 'object' && part.__proto__ === Object.prototype) {
         setAttrs(node, part);
       } else {
-        node.appendChild(domBuilder(part));
+        node.appendChild(domBuilder(part, refs));
       }
       first = false;
-
     }
     return node;
   };
@@ -55,7 +53,7 @@
       var value = attrs[key];
       if (key === "$") {
         value(node);
-      } else if (key === "style") {
+      } else if (key === "css") {
         setStyle(node.style, value);
       } else if (key.substr(0, 2) === "on") {
         node.addEventListener(key.substr(2), value, false);
@@ -73,9 +71,10 @@
     }
   }
 
-  var CLASS_MATCH = /\.[^.#]+/g,
-      ID_MATCH = /#[^.#]+/,
-      TAG_MATCH = /^[^.#]+/;
+  var CLASS_MATCH = /\.[^.#$]+/g,
+      ID_MATCH = /#[^.#$]+/,
+      REF_MATCH = /\$[^.#$]+/;
+      TAG_MATCH = /^[^.#$]+/;
 
   function stripFirst(part) {
     return part.substr(1);

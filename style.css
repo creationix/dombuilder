@@ -1,0 +1,13 @@
+.column {
+  display: inline-block;
+  width: 40%;
+}
+.form {
+  clear: both;
+  border: 10px solid #08f;
+  margin: 0;
+  padding: 10px;
+}
+.left { float: left; }
+.right { float: right; }
+

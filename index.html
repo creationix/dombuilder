@@ -1,26 +1,38 @@
 <!doctype html>
 <html>
 <head>
-  <title>Todos App</title>
-  <script src="dombuilder.js"></script>
+<title>Sample App</title>
+<link rel="stylesheet" href="style.css"/>
 </head>
-<body><script>
-    var self = document.querySelector('body script');
-    self.parentNode.removeChild(self);
-    var root = domBuilder(
-      [".profile",
-        [".left.column",
-          ["#date", new Date().toString() ],
-          ["#address", "Sunnyvale, California" ]
-        ],
-        [".right.column", {onclick:function () {alert("Foo");}},
-          ["#email", "tim@creationix.com" ],
-          ["#bio", "Cool Guy" ]
-        ]
+<body>
+<script src="dombuilder.js"></script>
+<script>
+
+  // Clean body just for fun
+  document.body.innerText = "";
+
+  // Render our new body
+  var $ = {};
+  var root = domBuilder([
+    [".profile",
+      [".left.column",
+        ["#date", new Date().toString() ],
+        ["#address", "Sunnyvale, California" ]
       ],
-      ["hr", {style: {width:"100px",height:"50px"},$: function (hr) { console.log(hr); }}]
-    );
-    document.body.appendChild(root);
+      [".right.column", {onclick:function () {alert("Foo");}},
+        ["#email", "tim@creationix.com" ],
+        ["#bio", "Cool Guy" ]
+      ]
+    ],
+    [".form",
+      ["input$inputField"],
+      ["button", {onclick: function () { alert($.inputField.value); }}, "Click Me"]
+    ],
+    ["hr", {css: {width:"100px",height:"50px"},$: function (hr) { console.log(hr); }}],
+    ["p", "Inspect the source (not view source) to see how clean this dom is!"]
+  ], $);
+  document.body.appendChild(root);
+
 </script></body>
 </html>
 
