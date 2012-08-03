@@ -44,7 +44,7 @@
     throw new Error("paragraph didn't have the right contents")
   }
   console.log("Checking css property of hr element");
-  if (document.querySelector('hr').style.width === "100px") {
+  if (document.querySelector('hr').style.width !== "100px") {
     throw new Error("Failed to set 100px width to hr");
   }
 
