@@ -13,7 +13,7 @@
 
   // Render our new body
   var $ = {};
-  var root = domBuilder([
+  var template = [
     [".profile",
       [".left.column",
         ["#date", new Date().toString() ],
@@ -30,8 +30,23 @@
     ],
     ["hr", {css: {width:"100px",height:"50px"},$: function (hr) { console.log(hr); }}],
     ["p", "Inspect the source (not view source) to see how clean this dom is!"]
-  ], $);
+  ];
+  console.log("template", template);
+  var root = domBuilder(template, $);
+  console.log("$", $);
   document.body.appendChild(root);
+  console.log("Checking input field in $ hash...");
+  if (document.querySelector("input") !== $.inputField) {
+    throw new Error("input didn't match $.inputField");
+  }
+  console.log("Checking text content of paragraph...");
+  if (document.querySelector("p").textContent !== template[template.length - 1][1]) {
+    throw new Error("paragraph didn't have the right contents")
+  }
+  console.log("Checking css property of hr");
+  if (document.querySelector('hr').style.width === "100px") {
+    throw new Error("Failed to set 100px width to hr");
+  }
 
 </script></body>
 </html>
