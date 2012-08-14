@@ -17,6 +17,15 @@ function domBuilder(json, refs) {
   // Render strings as text nodes
   if (typeof json === 'string') return document.createTextNode(json);
 
+  // Pass through html elements as-is
+  if (json instanceof HTMLElement) return json;
+
+  // Stringify any other value types
+  if (!Array.isArray(json)) return document.createTextNode(json + "");
+
+  // Empty arrays are just empty fragments.
+  if (!json.length) return document.createDocumentFragment();
+
   var node, first;
   for (var i = 0, l = json.length; i < l; i++) {
     var part = json[i];
@@ -88,6 +97,3 @@ function stripFirst(part) {
 return domBuilder;
 
 });
-
-
-
