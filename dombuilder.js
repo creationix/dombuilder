@@ -18,8 +18,8 @@ function domBuilder(json, refs) {
   // Render strings as text nodes
   if (typeof json === 'string') return document.createTextNode(json);
 
-  // Pass through html elements as-is
-  if (json instanceof HTMLElement) return json;
+  // Pass through html elements and text nodes as-is
+  if (json instanceof HTMLElement || json instanceof Text) return json;
 
   // Stringify any other value types
   if (!Array.isArray(json)) return document.createTextNode(json + "");
