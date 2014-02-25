@@ -72,6 +72,8 @@ function setAttrs(node, attrs) {
       setStyle(node.style, value);
     } else if (key.substr(0, 2) === "on") {
       node.addEventListener(key.substr(2), value, false);
+    } else if (typeof value === "boolean") {
+      if (value) node.setAttribute(key, key);
     } else {
       node.setAttribute(key, value);
     }
