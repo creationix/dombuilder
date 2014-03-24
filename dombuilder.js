@@ -7,7 +7,7 @@
 //////////////////////////////////////
 
 ( // Module boilerplate to support component, browser globals and AMD.
-  (typeof module !== "undefined" && function (m) { module.exports = m(); }) ||
+  (typeof module === "object" && typeof module.exports === "object" && function (m) { module.exports = m(); }) ||
   (typeof define === "function" && function (m) { define("dombuilder", m); }) ||
   (function (m) { window.domBuilder = m(); })
 )(function () {
