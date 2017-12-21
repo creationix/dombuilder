@@ -1,6 +1,6 @@
 {
   "name": "dombuilder",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "An easy dombuilder using json-ml style syntax",
   "main": "dombuilder.js",
   "scripts": {
